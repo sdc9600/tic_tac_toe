@@ -10,9 +10,9 @@ class TicTacToe
 
   def game_loop
     until 1==0 do
-      self.make_move_crosses
-      puts self.print_gameboard
-      if self.check_victory?
+      player_make_move
+      puts print_gameboard
+      if check_victory?
         puts "Crosses have got three in a row and win!"
         break
       end
@@ -20,9 +20,9 @@ class TicTacToe
         puts "Neither side have got three in a row and the board is filled, the game is a draw!"
         break
       end
-      self.make_move_noughts
-      puts self.print_gameboard
-      if self.check_victory?
+      player_make_move
+      puts print_gameboard
+      if check_victory?
         puts "Noughts have got three in a row and win!"
         break
       end
@@ -54,34 +54,23 @@ class TicTacToe
   end
 
   def print_gameboard
+    @gameboard = "--Gameboard--\n| #{@game[0]} | #{@game[1]} | #{@game[2]} |\n|" \
+     " #{@game[3]} | #{@game[4]} | #{@game[5]} |\n| #{@game[6]} | #{@game[7]} | #{@game[8]} |\n-------------"
     @gameboard
   end
 
-  def make_move_crosses
+  def player_make_move
     location = 10
-    puts 'Crosses to move! Enter an available numeric location on the board (1-9) to place a cross!'
-    until @game[location-1] == ' ' do
-    location = gets.chomp.to_i
-  end
-  @game[location-1] = "X"
-  @gameboard = "--Gameboard--\n| #{@game[0]} | #{@game[1]} | #{@game[2]} |\n|" \
-     " #{@game[3]} | #{@game[4]} | #{@game[5]} |\n| #{@game[6]} | #{@game[7]} | #{@game[8]} |\n-------------"
-  @turn += 1
-end
-
-  def make_move_noughts
-    location = 10
-    puts "Noughts to move! Enter an available numeric location on the board (1-9) to place a nought!"
+    puts 'Crosses to move! Enter an available numeric location on the board (1-9) to place a cross!' if @turn.odd?
+    puts "Noughts to move! Enter an available numeric location on the board (1-9) to place a nought!" if @turn.even?
     until @game[location-1] == ' ' do
       location = gets.chomp.to_i
     end
-    @game[location-1] = "O"
-    @gameboard = "--Gameboard--\n| #{@game[0]} | #{@game[1]} | #{@game[2]} |\n|" \
-     " #{@game[3]} | #{@game[4]} | #{@game[5]} |\n| #{@game[6]} | #{@game[7]} | #{@game[8]} |\n-------------"
+    @game[location - 1] = "O" if @turn.even?
+    @game[location - 1] = "X" if @turn.odd?
     @turn += 1
   end
 end
-
 
 game = TicTacToe.new
 game.game_loop
