@@ -9,51 +9,51 @@ class TicTacToe
   end
 
   def game_loop
-    until 1==0 do
+    until @turn == 10 do
       player_make_move
-      puts print_gameboard
+      puts gameboard
       if check_victory?
         puts "Crosses have got three in a row and win!"
-        break
-      end
-      if @turn == 10
-        puts "Neither side have got three in a row and the board is filled, the game is a draw!"
-        break
-      end
-      player_make_move
-      puts print_gameboard
-      if check_victory?
         puts "Noughts have got three in a row and win!"
         break
       end
     end
+    drawn_game
   end
 
+
+
+
   private
+
+  def drawn_game
+    puts "Neither side have got three in a row and the board is filled, the game is a draw!"
+  end
+
   def check_victory?
     case
-    when @game[0] + @game[1] + @game[2] == "OOO" || @game[0] + @game[1] + @game[2] == "XXX" 
+    when @game[0, 1, 2].join == "OOO" || @game[0, 1, 2].join == "XXX" 
       true
-    when @game[3] + @game[4] + @game[5] == "OOO" || @game[3] + @game[4] + @game[5] == "XXX" 
+    when @game[3, 4, 5].join == "OOO" || @game[3, 4, 5].join == "XXX" 
       true
-    when @game[6] + @game[7] + @game[8] == "OOO" || @game[6] + @game[7] + @game[8] == "XXX" 
+    when @game[6, 7, 8].join == "OOO" || @game[6, 7, 8].join == "XXX" 
       true
-    when @game[0] + @game[3] + @game[6] == "OOO" || @game[0] + @game[3] + @game[6] == "XXX" 
+    when @game[0, 3, 6].join == "OOO" || @game[0, 3, 6].join == "XXX" 
       true
-    when @game[1] + @game[4] + @game[7] == "OOO" || @game[1] + @game[4] + @game[7] == "XXX" 
+    when @game[1, 4, 7].join == "OOO" || @game[1, 4, 7].join == "XXX" 
       true
-    when @game[2] + @game[5] + @game[8] == "OOO" || @game[2] + @game[5] + @game[8] == "XXX" 
+    when @game[2, 5, 8].join == "OOO" || @game[2, 5, 8].join == "XXX" 
       true
-    when @game[0] + @game[4] + @game[8] == "OOO" || @game[0] + @game[4] + @game[8] == "XXX" 
+    when @game[0, 4, 8].join == "OOO" || @game[0, 4, 8].join == "XXX" 
       true
-    when @game[2] + @game[4] + @game[6] == "OOO" || @game[2] + @game[4] + @game[6] == "XXX" 
+    when @game[2, 4, 6].join == "OOO" || @game[2, 4, 6].join == "XXX" 
       true  
     else
       false
     end
   end
 
-  def print_gameboard
+  def gameboard
     @gameboard = "--Gameboard--\n| #{@game[0]} | #{@game[1]} | #{@game[2]} |\n|" \
      " #{@game[3]} | #{@game[4]} | #{@game[5]} |\n| #{@game[6]} | #{@game[7]} | #{@game[8]} |\n-------------"
     @gameboard
@@ -66,9 +66,9 @@ class TicTacToe
     until @game[location-1] == ' ' do
       location = gets.chomp.to_i
     end
+    @turn += 1
     @game[location - 1] = "O" if @turn.even?
     @game[location - 1] = "X" if @turn.odd?
-    @turn += 1
   end
 end
 
